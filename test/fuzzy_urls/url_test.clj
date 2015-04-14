@@ -27,6 +27,11 @@
   {:query {:a "b" :c "" :d nil}}
   (in (string->url "?a=b&c=&d")))
 
+; test case normalizing
+(expect {:scheme "http"} (in (string->url "HtTp:")))
+(expect {:host "example.com"} (in (string->url "//eXaMpLE.CoM")))
+(expect {:user "UseR"} (in (string->url "//UseR@example.com")))
+
 
 (expect
   "http://sky@www:801/cgi-bin/finger?name=shriram&host=nw#top"

@@ -99,7 +99,9 @@
         (re-matches url-pattern string)
         [_ user host port]
         (if user+host+port (re-matches host-pattern user+host+port) [])]
-    (->Url scheme user host
+    (->Url (some-> scheme string/lower-case)
+           user
+           (some-> host string/lower-case)
            (and port (Integer/parseInt port))
            (path-string->list path)
            (query-string->map query) fragment)))
