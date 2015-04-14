@@ -22,6 +22,11 @@
   {:scheme nil, :user nil, :host nil, :port nil, :path [], :query {}, :fragment nil}
   (string->url "bar"))
 
+; test empty vs nil query parameters
+(expect
+  {:query {:a "b" :c "" :d nil}}
+  (in (string->url "?a=b&c=&d")))
+
 
 (expect
   "http://sky@www:801/cgi-bin/finger?name=shriram&host=nw#top"
