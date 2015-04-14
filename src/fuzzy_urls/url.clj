@@ -102,7 +102,7 @@
     (->Url (some-> scheme string/lower-case)
            user
            (some-> host string/lower-case)
-           (and port (Integer/parseInt port))
+           (some-> port Integer/parseInt)
            (path-string->list path)
            (query-string->map query) fragment)))
 
@@ -114,11 +114,11 @@
    :post [(string? %)]}
   (let [{:keys [scheme user host port path query fragment]} url]
     (str
-      (when scheme (str scheme "://"))
-      (when user (str user "@"))
+      (some-> scheme (str "://"))
+      (some-> user (str "@"))
       host
-      (when port (str ":" port))
+      (some->> port (str ":"))
       (when-not (empty? path) (str "/" (string/join "/" path)))
       (when-not (empty? query) (str "?" (query-map->string query)))
-      (when fragment (str "#" fragment)))))
+      (some->> fragment (str "#")))))
 
