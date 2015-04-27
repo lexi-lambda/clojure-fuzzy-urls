@@ -49,7 +49,7 @@
   #"^(?:([^@]*)@)?(.+?)(?::(\d+))?$")
 
 
-(defn- path-string->list
+(defn path-string->list
   "Converts a path string (which may be nil) to a vector of path elements."
   [path]
   {:pre  [((maybe string?) path)]
@@ -57,7 +57,7 @@
   ; drop the first element of the path because it contains a leading slash
   (into [] (and path (rest (string/split path #"/")))))
 
-(defn- query-map?
+(defn query-map?
   "A predicate for determining if a map is a valid representation of a query string."
   [query]
   {:pre [(map? query)]}
@@ -67,7 +67,7 @@
            ((maybe string?) v)))
     query))
 
-(defn- query-string->map
+(defn query-string->map
   "Converts a query string (which may be nil) to a map representation."
   [query]
   {:pre  [((maybe string?) query)]
@@ -79,7 +79,7 @@
       (keywordize-keys  (into {} ; this is necessary when v is nil
                               (for [[k v] pairs] [k v]))))))
 
-(defn- query-map->string
+(defn query-map->string
   "Converts a map representation of a query string to a string."
   [query]
   {:pre  [(query-map? query)]
